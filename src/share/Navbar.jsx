@@ -8,7 +8,8 @@ import React, { useState } from 'react';
 function Navbar() {
     const { data: session } = authClient.useSession();
     const user = session?.user;
-    console.log(user, 'eeelooo');
+    const userName = user?.name || user?.email?.split("@")[0] || "User";
+    const userImage = user?.image;
     
 
 
@@ -55,20 +56,56 @@ function Navbar() {
                         })}
                     </div>
 
-                    <div className="hidden md:flex items-center gap-3">
-                        <Link
+                    {user ? (
+                        <div className="hidden md:flex items-center gap-3">
+                            <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#1A1A1A]/[0.04] ring-1 ring-[#1A1A1A]/10">
+                                {userImage ? (
+                                    <img
+                                        src={userImage}
+                                        alt={userName}
+                                        className="h-9 w-9 rounded-full object-cover ring-1 ring-[#1A1A1A]/10"
+                                    />
+                                ) : (
+                                    <div className="h-9 w-9 rounded-full bg-[#1A1A1A] text-[#FAF9F6] text-xs font-semibold flex items-center justify-center">
+                                        {userName.charAt(0).toUpperCase()}
+                                    </div>
+                                )}
+                                <p className="text-sm font-medium text-[#1A1A1A]/80">
+                                    Welcome, <span className="text-[#1A1A1A]">{userName}</span>
+                                </p>
+                            </div>
+
+                            <button
+                                type="button"
+                                onClick={async () => await authClient.signOut()}
+                                className="px-6 py-2.5 text-sm font-semibold rounded-full bg-[#1A1A1A] text-[#FAF9F6] ring-1 ring-[#1A1A1A]/10 shadow-md shadow-[#1A1A1A]/15 hover:bg-[#2a2a2a] hover:text-white hover:ring-[#FF8C00]/35 hover:shadow-lg hover:shadow-[#FF8C00]/20 hover:-translate-y-0.5 transition-all duration-300"
+                            >
+                                Logout
+                            </button>
+                        </div>
+                    ) : (
+                        <div className="hidden md:flex items-center gap-3">
+                        
+                        <button>
+                            <Link
                             href="/login"
                             className="px-6 py-2.5 text-sm font-semibold rounded-full bg-[#1A1A1A] text-[#FAF9F6] ring-1 ring-[#1A1A1A]/10 shadow-md shadow-[#1A1A1A]/15 hover:bg-[#2a2a2a] hover:text-white hover:ring-[#FF8C00]/35 hover:shadow-lg hover:shadow-[#FF8C00]/20 hover:-translate-y-0.5 transition-all duration-300"
                         >
                             Login
                         </Link>
+                        </button>
+
+                        <button>
                         <Link
                             href="/register"
                             className="px-6 py-2.5 text-sm font-semibold rounded-full bg-[#FF8C00] text-white shadow-md shadow-[#FF8C00]/25 hover:bg-[#e67e00] hover:shadow-lg hover:shadow-[#FF8C00]/30 hover:-translate-y-0.5 transition-all duration-300"
                         >
                             Register
                         </Link>
+                        </button>
                     </div>
+                    )
+                }
 
                     <div className="md:hidden flex items-center">
                         <button
@@ -102,15 +139,45 @@ function Navbar() {
                         );
                     })}
 
-                    <div className="pt-5 mt-2 border-t border-[#1A1A1A]/10 flex flex-col gap-3">
-                    <h2 className=' font-medium'>{user.name}</h2>
-                        <Link href="/login" onClick={() => setIsOpen(false)} className="w-full py-3.5 text-center font-semibold text-[#1A1A1A] rounded-2xl bg-[#FAF9F6] ring-1 ring-[#1A1A1A]/12 hover:bg-[#1A1A1A]/[0.04] transition-colors">
-                            Login
-                        </Link>
-                        <Link href="/register" onClick={() => setIsOpen(false)} className="w-full py-3.5 text-center font-semibold text-white rounded-full bg-[#FF8C00] shadow-md shadow-[#FF8C00]/25">
-                            Register
-                        </Link>
-                    </div>
+                    {user ? (
+                        <div className="pt-5 mt-2 border-t border-[#1A1A1A]/10 flex flex-col gap-3">
+                            <div className="flex items-center gap-2 px-3 py-2 rounded-2xl bg-[#1A1A1A]/[0.04] ring-1 ring-[#1A1A1A]/10">
+                                {userImage ? (
+                                    <img
+                                        src={userImage}
+                                        alt={userName}
+                                        className="h-9 w-9 rounded-full object-cover ring-1 ring-[#1A1A1A]/10"
+                                    />
+                                ) : (
+                                    <div className="h-9 w-9 rounded-full bg-[#1A1A1A] text-[#FAF9F6] text-xs font-semibold flex items-center justify-center">
+                                        {userName.charAt(0).toUpperCase()}
+                                    </div>
+                                )}
+                                <p className="text-sm font-medium text-[#1A1A1A]/80">
+                                    Welcome, <span className="text-[#1A1A1A]">{userName}</span>
+                                </p>
+                            </div>
+                            <button
+                                type="button"
+                                onClick={async () => {
+                                    await authClient.signOut();
+                                    setIsOpen(false);
+                                }}
+                                className="w-full py-3.5 text-center font-semibold text-[#FAF9F6] rounded-full bg-[#1A1A1A] ring-1 ring-[#1A1A1A]/12 hover:bg-[#2a2a2a] transition-colors"
+                            >
+                                Logout
+                            </button>
+                        </div>
+                    ) : (
+                        <div className="pt-5 mt-2 border-t border-[#1A1A1A]/10 flex flex-col gap-3">
+                            <Link href="/login" onClick={() => setIsOpen(false)} className="w-full py-3.5 text-center font-semibold text-[#1A1A1A] rounded-2xl bg-[#FAF9F6] ring-1 ring-[#1A1A1A]/12 hover:bg-[#1A1A1A]/[0.04] transition-colors">
+                                Login
+                            </Link>
+                            <Link href="/register" onClick={() => setIsOpen(false)} className="w-full py-3.5 text-center font-semibold text-white rounded-full bg-[#FF8C00] shadow-md shadow-[#FF8C00]/25">
+                                Register
+                            </Link>
+                        </div>
+                    )}
                 </div>
             </div>
         </nav>
