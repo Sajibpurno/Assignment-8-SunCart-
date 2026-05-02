@@ -39,11 +39,12 @@ function SummerCareTips() {
                     <div className="text-center md:text-left space-y-2">
                         <h4 className="font-heading text-xl sm:text-2xl text-[#FAF9F6]">Find Your Perfect Fit</h4>
                         <p className="text-[#FAF9F6]/65 text-sm sm:text-base max-w-md">
-                        Don't guess your style. Get expert advice on the best summer gear and skincare to stay fresh all season long.
+                        Dont guess your style. Get expert advice on the best summer gear and skincare to stay fresh all season long.
                         </p>
                     </div>
                     <button
                         type="button"
+                        suppressHydrationWarning={true}
                         className="shrink-0 px-9 py-3.5 rounded-full bg-[#FF8C00] text-white font-semibold hover:bg-[#e67e00] transition-colors duration-300 shadow-lg shadow-black/25"
                     >
                         Chat with Expert

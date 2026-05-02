@@ -1,4 +1,5 @@
 "use client";
+import { authClient } from "@/lib/auth-client";
 import Link from "next/link"
 import { useForm } from "react-hook-form";
 import { FaHome, FaGithub } from "react-icons/fa"
@@ -7,9 +8,19 @@ import { FcGoogle } from "react-icons/fc"
 function Login() {
     const { register, handleSubmit, formState: { errors } } = useForm();
 
-    const onSubmit = (data) => {
+    const onSubmit = async(data) => {
         console.log("Login Data Submitted:", data);
-    }
+
+        const  { email, password } = data;
+        
+                const {data: res, error} = await authClient.signIn.email({
+                email: email, // required
+                password: password, // required
+                rememberMe: true,
+                callbackURL: "/",
+                });
+                console.log(res, error);
+        }
 
 
     return (

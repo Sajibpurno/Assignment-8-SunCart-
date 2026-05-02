@@ -65,10 +65,12 @@ const Footer = () => {
                                 type="email"
                                 placeholder="Your email address"
                                 autoComplete="email"
+                                suppressHydrationWarning
                                 className="flex-1 min-w-0 rounded-full bg-white/10 border border-white/15 px-5 py-3 text-sm text-[#FAF9F6] placeholder:text-[#FAF9F6]/35 outline-none focus:border-[#FF8C00]/60 focus:ring-2 focus:ring-[#FF8C00]/20 transition-all"
                             />
                             <button
                                 type="button"
+                                suppressHydrationWarning
                                 className="shrink-0 rounded-full bg-[#FF8C00] px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-black/20 hover:bg-[#e67e00] transition-colors duration-300"
                             >
                                 Subscribe

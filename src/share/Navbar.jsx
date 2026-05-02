@@ -1,10 +1,17 @@
 "use client";
 import { Home, Menu, ShoppingBag, UserRound, X } from 'lucide-react';
 import Link from 'next/link';
+import { authClient } from '@/lib/auth-client';
 import { usePathname } from 'next/navigation';
 import React, { useState } from 'react';
 
 function Navbar() {
+    const { data: session } = authClient.useSession();
+    const user = session?.user;
+    console.log(user, 'eeelooo');
+    
+
+
     const [isOpen, setIsOpen] = useState(false);
     const pathname = usePathname();
 
@@ -96,6 +103,7 @@ function Navbar() {
                     })}
 
                     <div className="pt-5 mt-2 border-t border-[#1A1A1A]/10 flex flex-col gap-3">
+                    <h2 className=' font-medium'>{user.name}</h2>
                         <Link href="/login" onClick={() => setIsOpen(false)} className="w-full py-3.5 text-center font-semibold text-[#1A1A1A] rounded-2xl bg-[#FAF9F6] ring-1 ring-[#1A1A1A]/12 hover:bg-[#1A1A1A]/[0.04] transition-colors">
                             Login
                         </Link>
