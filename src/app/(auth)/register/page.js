@@ -1,4 +1,5 @@
 "use client";
+import { authClient } from '@/lib/auth-client';
 import Link from 'next/link'
 import { useForm } from 'react-hook-form'
 import { FaHome } from 'react-icons/fa';
@@ -8,10 +9,20 @@ import { FcGoogle } from 'react-icons/fc';
 function Register() {
     const { register, handleSubmit, formState: { errors } } = useForm();
 
-    const onSubmit = (data) => {
+    const onSubmit = async (data) => {
         console.log("Form data Submitted", data);
+        
+        const  { email, name, photo, password} = data;
 
-    }
+        const {data: res, error} = await authClient.signUp.email({
+        name: name, // required
+        email: email, // required
+        password: password, // required
+        image: photo,
+        callbackURL: "/",
+        });
+        console.log(res, error);
+        };
 
 
     return (
@@ -63,7 +74,7 @@ function Register() {
                     <div>
                         <label className="block text-sm font-semibold text-[#1A1A1A]/75 mb-1.5 ml-0.5">Photo URL (Optional)</label>
                         <input
-                            {...register("photoUrl")}
+                            {...register("photo")}
                             type="url"
                             placeholder="https://image-link.com"
                             className="w-full px-4 py-3.5 rounded-2xl border border-[#1A1A1A]/12 outline-none focus:border-[#FF8C00]/50 focus:ring-2 focus:ring-[#FF8C00]/15 transition-all bg-[#FAF9F6] text-[#1A1A1A] placeholder:text-[#1A1A1A]/35"
