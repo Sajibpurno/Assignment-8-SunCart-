@@ -8,6 +8,8 @@ import React, { useState } from 'react';
 function Navbar() {
     const { data: session } = authClient.useSession();
     const user = session?.user;
+    console.log(user);
+    
     const userName = user?.name || user?.email?.split("@")[0] || "User";
     const userImage = user?.image;
     
