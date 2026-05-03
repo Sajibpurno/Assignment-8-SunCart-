@@ -6,7 +6,7 @@ import { usePathname } from 'next/navigation';
 import React, { useState } from 'react';
 
 function Navbar() {
-    const { data: session } = authClient.useSession();
+    const { data: session, isPending} = authClient.useSession();
     const user = session?.user;
     console.log(user);
     
@@ -59,7 +59,7 @@ function Navbar() {
                         })}
                     </div>
 
-                    {user ? (
+                    {isPending ? ( <span className="loading loading-spinner text-warning"></span> ) : user ? (
                         <div className="hidden md:flex items-center gap-3">
                             <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#1A1A1A]/[0.04] ring-1 ring-[#1A1A1A]/10">
                                 {userImage ? (
