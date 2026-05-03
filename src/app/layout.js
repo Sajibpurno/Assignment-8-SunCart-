@@ -1,6 +1,7 @@
 import { Inter, Playfair_Display } from "next/font/google";
 import "./globals.css";
 
+
 const playfair = Playfair_Display({
     variable: "--font-playfair",
     subsets: ["latin"],
@@ -25,7 +26,10 @@ export default function RootLayout({ children }) {
             <body
                 className={`${inter.className} min-h-full bg-[#FAF9F6] text-[#1A1A1A] antialiased`}
             >
+                <main>
                 {children}
+                </main>
+                
             </body>
         </html>
     );

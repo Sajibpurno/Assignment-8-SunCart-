@@ -1,12 +1,16 @@
 "use client";
 import { authClient } from "@/lib/auth-client";
 import Link from "next/link"
+import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { FaHome, FaGithub } from "react-icons/fa"
+import { FaHome, FaGithub, FaEye, FaEyeSlash, FaRegEyeSlash } from "react-icons/fa"
 import { FcGoogle } from "react-icons/fc"
+import { toast } from "react-toastify";
 
 function Login() {
     const { register, handleSubmit, formState: { errors } } = useForm();
+    
+    const [isShowPass, setIsShowPass] = useState(false);
 
     const onSubmit = async(data) => {
         console.log("Login Data Submitted:", data);
@@ -20,6 +24,13 @@ function Login() {
                 callbackURL: "/",
                 });
                 console.log(res, error);
+
+                if(error){
+                    toast.warning(error.message)
+                }
+                if(res){
+                    toast.success('Login Successful')
+                }
         }
 
 
@@ -60,7 +71,7 @@ function Login() {
                         {errors.email && <p className="text-red-600 text-xs mt-1.5 ml-0.5">{errors.email.message}</p>}
                     </div>
 
-                    <div>
+                    <div className=" relative">
                         <div className="flex justify-between items-center mb-1.5 ml-0.5">
                             <label className="block text-sm font-semibold text-[#1A1A1A]/75">Password</label>
                             <Link href="/forgot-password" className="text-xs text-[#FF8C00] hover:text-[#e67e00] font-medium transition-colors">
@@ -71,10 +82,13 @@ function Login() {
                             {...register("password", {
                                 required: "Password is required"
                             })}
-                            type="password"
+                            type={isShowPass ? "text" : "password"}
                             placeholder="••••••••"
                             className={`w-full px-4 py-3.5 rounded-2xl border outline-none transition-all bg-[#FAF9F6] ${errors.password ? 'border-red-500 focus:ring-red-200' : 'border-[#1A1A1A]/12 focus:border-[#FF8C00]/50 focus:ring-2 focus:ring-[#FF8C00]/15'} text-[#1A1A1A] placeholder:text-[#1A1A1A]/35`}
                         />
+                        <span className=" absolute right-2 top-10 cursor-pointer" onClick={() => setIsShowPass(!isShowPass)}>
+                        {isShowPass ? <FaEye /> : <FaRegEyeSlash /> }
+                        </span>
                         {errors.password && <p className="text-red-600 text-xs mt-1.5 ml-0.5">{errors.password.message}</p>}
                     </div>
 

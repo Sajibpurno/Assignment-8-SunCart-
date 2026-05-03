@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form'
 import { FaHome } from 'react-icons/fa';
 import { FaFacebook } from 'react-icons/fa6';
 import { FcGoogle } from 'react-icons/fc';
+import { toast } from "react-toastify";
 
 function Register() {
     const { register, handleSubmit, formState: { errors } } = useForm();
@@ -22,6 +23,13 @@ function Register() {
         callbackURL: "/",
         });
         console.log(res, error);
+
+        if(error){
+                    toast.warning(error.message)
+                }
+                if(res){
+                    toast.success('Account Register Successful')
+                }
         };
 
 

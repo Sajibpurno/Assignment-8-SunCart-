@@ -63,7 +63,7 @@ function Navbar() {
                                     <img
                                         src={userImage}
                                         alt={userName}
-                                        className="h-9 w-9 rounded-full object-cover ring-1 ring-[#1A1A1A]/10"
+                                        className=" uppercase h-9 w-9 rounded-full object-cover ring-1 ring-[#1A1A1A]/10"
                                     />
                                 ) : (
                                     <div className="h-9 w-9 rounded-full bg-[#1A1A1A] text-[#FAF9F6] text-xs font-semibold flex items-center justify-center">
