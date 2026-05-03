@@ -8,6 +8,19 @@ import { FcGoogle } from "react-icons/fc"
 import { toast } from "react-toastify";
 
 function Login() {
+    // google log in--
+    const handleGoogleLogin = async()=> {
+        const data = await authClient.signIn.social({
+        provider: "google",
+  });
+    }
+    // github log in--
+    const handleGithubLogin = async() =>{
+        const data = await authClient.signIn.social({
+        provider: "github"
+    });
+    }
+
     const { register, handleSubmit, formState: { errors } } = useForm();
     
     const [isShowPass, setIsShowPass] = useState(false);
@@ -89,6 +102,7 @@ function Login() {
                         <span className=" absolute right-2 top-10 cursor-pointer" onClick={() => setIsShowPass(!isShowPass)}>
                         {isShowPass ? <FaEye /> : <FaRegEyeSlash /> }
                         </span>
+                        {/* add it on reg. part ok */}
                         {errors.password && <p className="text-red-600 text-xs mt-1.5 ml-0.5">{errors.password.message}</p>}
                     </div>
 
@@ -130,14 +144,14 @@ function Login() {
                 </div>
 
                 <div className="grid grid-cols-2 gap-3 mb-2">
-                    <button
+                    <button onClick={handleGoogleLogin}
                         type="button"
                         className="flex items-center justify-center gap-2 py-3 border border-[#1A1A1A]/12 rounded-2xl hover:bg-[#1A1A1A]/[0.04] transition-colors text-sm font-semibold text-[#1A1A1A]/80"
                     >
                         <FcGoogle size={20} />
                         Google
                     </button>
-                    <button
+                    <button onClick={handleGithubLogin}
                         type="button"
                         className="flex items-center justify-center gap-2 py-3 border border-[#1A1A1A]/12 rounded-2xl hover:bg-[#1A1A1A]/[0.04] transition-colors text-sm font-semibold text-[#1A1A1A]/80"
                     >

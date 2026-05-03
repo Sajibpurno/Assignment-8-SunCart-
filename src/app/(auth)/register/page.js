@@ -1,14 +1,32 @@
 "use client";
 import { authClient } from '@/lib/auth-client';
 import Link from 'next/link'
+import { useState } from 'react';
 import { useForm } from 'react-hook-form'
-import { FaHome } from 'react-icons/fa';
+import { FaEye, FaGithub, FaHome, FaRegEyeSlash } from 'react-icons/fa';
 import { FaFacebook } from 'react-icons/fa6';
 import { FcGoogle } from 'react-icons/fc';
 import { toast } from "react-toastify";
 
 function Register() {
+
+     // google log in--
+    const handleGoogleLogin = async()=> {
+        const data = await authClient.signIn.social({
+        provider: "google",
+  });
+    }
+    // github log in--
+    const handleGithubLogin = async() =>{
+        const data = await authClient.signIn.social({
+        provider: "github"
+    });
+    }
+
     const { register, handleSubmit, formState: { errors } } = useForm();
+
+    // pass see er toggleing
+    const [isShowPass, setIsShowPass] = useState(false);
 
     const onSubmit = async (data) => {
         console.log("Form data Submitted", data);
@@ -56,7 +74,7 @@ function Register() {
                         <input
                             {...register("name", { required: "Name is required" })}
                             type="text"
-                            placeholder="John Doe"
+                            placeholder="Your Name"
                             className={`w-full px-4 py-3.5 rounded-2xl border outline-none transition-all bg-[#FAF9F6] ${errors.name ? 'border-red-500' : 'border-[#1A1A1A]/12 focus:border-[#FF8C00]/50 focus:ring-2 focus:ring-[#FF8C00]/15'} text-[#1A1A1A] placeholder:text-[#1A1A1A]/35`}
                         />
                         {errors.name && <p className="text-red-600 text-xs mt-1.5 ml-0.5">{errors.name.message}</p>}
@@ -89,17 +107,21 @@ function Register() {
                         />
                     </div>
 
-                    <div>
+                    <div className='relative'>
                         <label className="block text-sm font-semibold text-[#1A1A1A]/75 mb-1.5 ml-0.5">Password</label>
                         <input
                             {...register("password", {
                                 required: "Password is required",
                                 minLength: { value: 6, message: "At least 6 characters" }
                             })}
-                            type="password"
+                            type={isShowPass ? "text" : "password"}
                             placeholder="••••••••"
                             className={`w-full px-4 py-3.5 rounded-2xl border outline-none transition-all bg-[#FAF9F6] ${errors.password ? 'border-red-500' : 'border-[#1A1A1A]/12 focus:border-[#FF8C00]/50 focus:ring-2 focus:ring-[#FF8C00]/15'} text-[#1A1A1A] placeholder:text-[#1A1A1A]/35`}
                         />
+                        <span className=" absolute right-2 top-10 cursor-pointer" onClick={() => setIsShowPass(!isShowPass)}>
+                                                {isShowPass ? <FaEye /> : <FaRegEyeSlash /> }
+                                                </span>
+
                         {errors.password && <p className="text-red-600 text-xs mt-1.5 ml-0.5">{errors.password.message}</p>}
                     </div>
 
@@ -130,19 +152,19 @@ function Register() {
                 </div>
 
                 <div className="grid grid-cols-2 gap-3 mb-2">
-                    <button
+                    <button onClick={handleGoogleLogin}
                         type="button"
-                        className="flex items-center justify-center gap-2 py-3 border border-[#1A1A1A]/12 rounded-2xl hover:bg-[#1A1A1A]/[0.04] transition-colors text-sm font-semibold text-[#1A1A1A]/80"
+                        className="flex items-center cursor-pointer justify-center gap-2 py-3 border border-[#1A1A1A]/12 rounded-2xl hover:bg-[#1A1A1A]/[0.20] transition-colors text-sm font-semibold text-[#1A1A1A]/80"
                     >
                         <FcGoogle size={20} />
                         Google
                     </button>
-                    <button
+                    <button onClick={handleGithubLogin}
                         type="button"
-                        className="flex items-center justify-center gap-2 py-3 bg-[#1877F2] text-white rounded-2xl hover:bg-[#166fe5] transition-colors text-sm font-semibold"
+                        className="flex items-center justify-center gap-2 py-3 border border-[#1A1A1A]/12 rounded-2xl hover:bg-[#1A1A1A]/[0.20] cursor-pointer transition-colors text-sm font-semibold text-[#1A1A1A]/80"
                     >
-                        <FaFacebook size={20} />
-                        Facebook
+                        <FaGithub size={20} />
+                        Github
                     </button>
                 </div>
             </div>
