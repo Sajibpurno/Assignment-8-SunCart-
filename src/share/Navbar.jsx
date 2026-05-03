@@ -21,6 +21,7 @@ function Navbar() {
     const navLinks = [
         { name: 'Home', icon: <Home size={18} strokeWidth={1.75} />, href: '/' },
         { name: 'Products', icon: <ShoppingBag size={18} strokeWidth={1.75} />, href: '/products' },
+        { name: 'About Us', icon: <UserRound size={18} strokeWidth={1.75} />, href: '/about-us' },
         { name: 'My Profile', icon: <UserRound size={18} strokeWidth={1.75} />, href: '/my-profile' },
     ];
 
